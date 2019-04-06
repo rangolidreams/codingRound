@@ -3,19 +3,59 @@ package codinground.page;
 import codinground.domain.FlightBooking;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.Date;
-
-import static codinground.DateUtils.formatDate;
+import java.util.concurrent.TimeUnit;
 
 public class HomePage extends Page {
+
+    @FindBy(linkText = "Hotels")
+    private WebElement hotelLink;
+
+    @FindBy(linkText = "Your trips")
+    private WebElement trips;
+
+    @FindBy(id = "OneWay")
+    private WebElement oneWay;
+
+
+    @FindBy(id = "FromTag")
+    private WebElement fromTag;
+
+
+    @FindBy(id="ToTag")
+    private WebElement toTag;
+
+    @FindBy(id = "DepartDate")
+    private WebElement departDate;
+
+
+    @FindBy(id="SearchBtn")
+    private WebElement searchBtn;
+
+    @FindBy(css = "#ui-id-2 > .list:nth-child(1)")
+    private WebElement firstDestinationResult;
+
+    @FindBy(css= "#ui-id-1 > .list:nth-child(1)")
+    private WebElement firstSourceResult;
+
+    @FindBy(className="searchSummary" )
+    private WebElement searchSummary;
+
     public HomePage(WebDriver driver) {
         super(driver);
     }
 
     public HotelBookingPage goToHotelBooking() {
-        driver.findElement(By.linkText("Hotels")).click();
-        return new HotelBookingPage(driver);
+        hotelLink.click();
+        return PageFactory.initElements(driver, HotelBookingPage.class);
+    }
+    public SignInPage goToYourTrips() {
+        trips.click();
+        return PageFactory.initElements(driver, SignInPage.class);
     }
 
     public void doBooking(FlightBooking booking) {
@@ -23,36 +63,36 @@ public class HomePage extends Page {
         chooseOrigin(booking.getSource());
         chooseDestination(booking.getDestination());
         chooseDepartDate(booking.getDepartDate());
-        submit();
+        search();
     }
 
     public void selectOneWay() {
-        driver.findElement(By.id("OneWay")).click();
+        oneWay.click();
     }
 
     public void chooseOrigin(String origin) {
-        chooseAutoComplete(origin, By.id("FromTag"), By.cssSelector("#ui-id-1 > .list:nth-child(1)"));
+        chooseAutoComplete(origin, fromTag, firstSourceResult);
     }
 
     public void chooseDestination(String destination) {
-        chooseAutoComplete(destination, By.id("ToTag"), By.cssSelector("#ui-id-2 > .list:nth-child(1)"));
+        chooseAutoComplete(destination, toTag, firstDestinationResult);
     }
 
     public void chooseDepartDate(Date date) {
-        pickDate(By.id("DepartDate"), date);
+        pickDate((departDate), date);
     }
 
-    public void submit() {
-        driver.findElement(By.id("SearchBtn")).click();
+    public void search() {
+        searchBtn.click();
     }
 
     public boolean isSearchSummaryPresent() {
-        return isElementPresent(By.className("searchSummary"));
+        return isElementPresent(searchSummary);
     }
 
     public static HomePage moveToHomePage(WebDriver driver) {
         driver.get("https://www.cleartrip.com/");
-        waitFor(2000);
-        return new HomePage(driver);
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        return PageFactory.initElements(driver, HomePage.class);
     }
 }

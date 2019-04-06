@@ -3,6 +3,7 @@ package codinground.page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -27,29 +28,29 @@ abstract public class Page {
     }
 
 
-    protected boolean isElementPresent(By by) {
+    protected boolean isElementPresent(WebElement element) {
         try {
-            driver.findElement(by);
+            element.isDisplayed();
             return true;
         } catch (NoSuchElementException e) {
             return false;
         }
     }
 
-    protected void waitFor(By element) {
+
+    protected void waitFor(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(element));
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    protected void chooseAutoComplete(String text, By autoCompleteBox, By autoCompleteItem) {
-        driver.findElement(autoCompleteBox).clear();
-        driver.findElement(autoCompleteBox).sendKeys(text);
+    protected void chooseAutoComplete(String text, final WebElement autoCompleteBox, final WebElement autoCompleteItem) {
+        autoCompleteBox.clear();
+        autoCompleteBox.sendKeys(text);
         waitFor(autoCompleteItem);
-        driver.findElement(autoCompleteItem).click();
+        autoCompleteItem.click();
     }
 
-    protected void pickDate(By element, Date date) {
-        driver.findElement(element)
-                .sendKeys(formatDate(date) + "\n");
+    protected void pickDate(WebElement element, Date date) {
+        element.sendKeys(formatDate(date) + "\n");
     }
 }

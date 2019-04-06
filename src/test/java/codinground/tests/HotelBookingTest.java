@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import static codinground.DateUtils.nDaysFromToday;
 import static codinground.DateUtils.tomorrow;
 import static codinground.domain.HotelBooking.Travellers.ONE_ROOM_TWO_ADULTS;
+import static org.testng.Assert.assertTrue;
 
 public class HotelBookingTest extends BaseTest {
 
@@ -22,5 +23,7 @@ public class HotelBookingTest extends BaseTest {
                 ONE_ROOM_TWO_ADULTS,
                 tomorrow(),
                 nDaysFromToday(3)));
+        assertTrue(hotelBookingPage.isElementResultVisible());
+
     }
 }

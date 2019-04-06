@@ -15,6 +15,7 @@ public class BaseTest {
         driver = new ChromeDriver();
     }
 
+
     private void setDriverPath() {
         if (PlatformUtil.isMac()) {
             System.setProperty("webdriver.chrome.driver", "chromedriver");
