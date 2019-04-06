@@ -23,6 +23,9 @@ public class SignInPage extends Page {
     @FindBy(css = "signInButton")
     private WebElement signInButton;
 
+    @FindBy(id = "trips")
+    private WebElement trips;
+
     public SignInPage(WebDriver driver) {
         super(driver);
     }
@@ -30,7 +33,7 @@ public class SignInPage extends Page {
 
     public void signIn(SignIn signIn) {
         signInLink();
-        SwitchtoModelWindow();
+        switchtoModelWindow();
         enterText(signIn.getUserName(),userName);
         enterText(signIn.getPassword(),password);
         doSignIn();
@@ -52,9 +55,12 @@ public class SignInPage extends Page {
         driver.findElement(By.id("signInButton")).click();
     }
 
-    public  void SwitchtoModelWindow()
+    public  void switchtoModelWindow()
     {
         driver.switchTo().frame("modal_window");
+    }
+    public boolean isCheckTripLink() {
+        return isElementPresent(trips);
     }
 
 }
