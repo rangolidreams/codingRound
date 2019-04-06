@@ -46,6 +46,10 @@ public class SignInPage extends Page {
         return errors1.getText();
     }
 
+    public boolean isErrorMsg(String errorMsg)   {
+        return isElementcontains(getErrorMsg(), errorMsg ) ;
+    }
+
     public  void enterText(String text, WebElement element) {
         element.clear();
         element.sendKeys(text);

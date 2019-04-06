@@ -1,4 +1,4 @@
-package codinground;
+package codinground.common;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

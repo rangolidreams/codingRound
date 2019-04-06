@@ -1,4 +1,4 @@
-package codinground;
+package codinground.common;
 
 import com.sun.javafx.PlatformUtil;
 import org.openqa.selenium.WebDriver;

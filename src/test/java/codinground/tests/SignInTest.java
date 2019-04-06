@@ -1,12 +1,10 @@
 package codinground.tests;
 
-import codinground.BaseTest;
+import codinground.common.BaseTest;
 import codinground.domain.SignIn;
 import codinground.page.HomePage;
 import codinground.page.SignInPage;
 import org.testng.annotations.Test;
-
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class SignInTest extends BaseTest {
@@ -16,8 +14,7 @@ public class SignInTest extends BaseTest {
         SignInPage signInPage= homePage.goToYourTrips();
         SignIn properSign = SignIn.withWrongPassword();
         signInPage.signIn(new SignIn(properSign.getUserName(), properSign.getPassword()));
-        assertEquals(signInPage.getErrorMsg(), "There were errors in your submission\n" +
-                "Your account password cannot start or end with a space.");
+        assertTrue(signInPage.isErrorMsg("There were errors in your submission"));
     }
 
     @Test

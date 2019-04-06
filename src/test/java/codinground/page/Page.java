@@ -1,6 +1,5 @@
 package codinground.page;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Date;
 
-import static codinground.DateUtils.formatDate;
+import static codinground.common.DateUtils.formatDate;
 
 abstract public class Page {
     protected final WebDriver driver;
@@ -32,6 +31,14 @@ abstract public class Page {
         try {
             element.isDisplayed();
             return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+    protected boolean isElementcontains(String expected,String actual) {
+        try {
+
+            return expected.contains(actual);
         } catch (NoSuchElementException e) {
             return false;
         }
