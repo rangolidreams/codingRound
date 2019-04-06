@@ -7,6 +7,7 @@ import java.util.Properties;
 
 
 public class ReadingTestData {
+    //read the testdata
 
     private static Properties props = new Properties();
 
